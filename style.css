@@ -1,0 +1,290 @@
+/* --- Global Reset & Variables --- */
+:root {
+    --primary-color: #00f2fe;
+    --secondary-color: #4facfe;
+    --text-dark: #0f172a;
+    --text-light: #f8fafc;
+    --nav-bg-initial: #ffffff;
+    --nav-bg-scroll: rgba(15, 23, 42, 0.85);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, sans-serif;
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: #ffffff;
+    color: var(--text-dark);
+}
+
+/* --- Navigation Base Layout --- */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 20px 0;
+    background-color: var(--nav-bg-initial);
+    border-bottom: 1px solid #e2e8f0;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+}
+
+/* Glassmorphism Dynamic Transition on Scroll */
+.navbar.scrolled {
+    padding: 12px 0;
+    background-color: var(--nav-bg-scroll);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.nav-container {
+    width: 85%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar .logo {
+    color: #0f172a;
+    font-size: 24px;
+    font-weight: 800;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.navbar.scrolled .logo {
+    color: var(--text-light);
+}
+
+.logo span {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.navbar .nav-links a {
+    color: #475569;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    position: relative;
+    padding: 5px 0;
+    transition: color 0.3s ease;
+}
+
+.navbar.scrolled .nav-links a {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* --- Menu Underline Hover/Active Effects --- */
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover, 
+.nav-links a.active {
+    color: var(--secondary-color) !important;
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+    width: 100%;
+}
+
+/* --- Mobile Menu Burger --- */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.menu-toggle .bar {
+    width: 26px;
+    height: 3px;
+    background-color: #0f172a;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.navbar.scrolled .menu-toggle .bar {
+    background-color: var(--text-light);
+}
+
+/* --- Adaptive Mobile Viewport Breakpoint --- */
+@media (max-width: 768px) {
+    .menu-toggle { display: flex; }
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 75%;
+        max-width: 300px;
+        background-color: #0f172a;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 40px;
+        transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: -10px 0 30px rgba(0,0,0,0.2);
+    }
+    .nav-links.active { right: 0; }
+    .nav-links a { color: rgba(255, 255, 255, 0.8) !important; }
+    .menu-toggle.open .bar:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+    .menu-toggle.open .bar:nth-child(2) { opacity: 0; }
+    .menu-toggle.open .bar:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+}
+
+/* --- Section Structural Layouts --- */
+section {
+    padding: 140px 24px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.hero-section {
+    background: linear-gradient(135deg, #0f172a, #1e1b4b);
+    color: var(--text-light);
+}
+
+.hero-content h1 {
+    font-size: clamp(2.5rem, 6vw, 4.2rem);
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 24px;
+}
+
+.hero-content p {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: #94a3b8;
+    max-width: 600px;
+    margin: 0 auto 40px;
+}
+
+.cta-btn {
+    display: inline-block;
+    padding: 14px 36px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: #0f172a;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
+    transition: all 0.3s ease;
+}
+
+.cta-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 22px rgba(0, 242, 254, 0.5);
+}
+
+.content-section h2 {
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 20px;
+}
+
+.content-section p {
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    color: #475569;
+    max-width: 650px;
+    line-height: 1.7;
+}
+
+.gray-bg {
+    background-color: #f8fafc;
+}
+
+/* --- Interactive Contact Link Cards --- */
+.contact-subtitle {
+    margin-bottom: 40px;
+}
+
+.contact-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 800px;
+    margin-top: 10px;
+}
+
+.contact-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: #ffffff;
+    text-decoration: none;
+    padding: 16px 28px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-align: left;
+}
+
+.contact-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--secondary-color);
+    box-shadow: 0 10px 20px -5px rgba(79, 172, 254, 0.2);
+}
+
+.contact-icon {
+    font-size: 24px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.contact-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #64748b;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.contact-value {
+    font-size: 15px;
+    color: #0f172a;
+    font-weight: 600;
+}
